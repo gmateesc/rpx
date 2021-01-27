@@ -5,8 +5,7 @@
 This project contains the implementation of the reverse proxy component
 of a multi-tier application whose archutecture is shown below
 
-
-![System architecture](images/arch.png| width=500)
+<img src="https://github.com/gmateesc/rpx/blob/master/images/arch.png" alt="sys arch" width="400">
 
 
 The reveres proxy sits between multiple clients and one or several
