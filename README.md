@@ -237,3 +237,26 @@ data:
         algorithm: round-robin
 ```
 
+Now we create the config-map resource
+
+``` bash
+
+  $ kubectl apply -f reverse-proxy-configmap.yaml
+  configmap/reverse-proxy-configmap created
+
+  k8s-master $ kb get  configmap/reverse-proxy-configmap -o yaml
+  apiVersion: v1
+  kind: ConfigMap
+  metadata:
+    name: reverse-proxy-configmap
+    namespace: default
+    resourceVersion: "1360044"
+    uid: 8b8d5c42-174f-4a64-be1e-e3c09ba09b65
+  data:
+    reverse_proxy.yaml: "proxy:\n  listen:\n    address: 0.0.0.0\n    port: 8080\n  services:\n
+      \ - name: my-service\n    domain: my-service.my-company.com\n    hosts:\n    -
+      address: 10.97.135.24\n      port: 9090\n    - address: 10.108.74.161\n      port:
+      9091      \n  # Supported load balancing algorithms\n  #  round-robin\n  #  random\n
+      \ load_balancing:\n    algorithm: round-robin\n"
+```
+
