@@ -1,9 +1,6 @@
 # RPX
 
 
-## https://github.com/gmateesc/rpx/blob/main/README.md#kubernetes-resources-created
-
-
 ## Table of Contents
 
 - [Objective](#objective)
