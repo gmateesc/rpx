@@ -118,9 +118,22 @@ by default round-robin balancing is used.
 
 ## Deployment to Kubernetes.
 
-Deployment to Kubernetes is done using these confiuguration files:
+Deployment to Kubernetes is done using two confiuguration files:
 
 ```bash
-
+$ tree deploy
+deploy
+├── reverse-proxy-application.yaml
+└── reverse-proxy-configmap.yaml
 ```
+
+These two files contain the followin specifications:
+
+- reverse-proxy-configmap.yaml defines the config-map
+  the contains the reverse configuration to be injected
+  into the reverse proxy pod;
+
+- reverse-proxy-application.yaml defines the Kuberners
+  deployment and service resources that provide the
+  the reverse proxy application, having a persistent IP address.
 
