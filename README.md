@@ -24,7 +24,7 @@
 ## Objective
 
 This project contains the implementation of the reverse proxy component
-of a multi-tier application whose archutecture is shown below
+of a multi-tier application whose architecture is shown below
 
 <img src="https://github.com/gmateesc/rpx/blob/main/images/arch.png" alt="sys arch" width="720">
 
