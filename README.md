@@ -85,11 +85,11 @@ as described next.
 <a name="config" id="config"></a>
 ## Configuration
 
-The proxy configuration file processed by the config module is determined as follows:
+The proxy configuration file processed by the *config* module is determined as follows:
 
 - if the configuration file */etc/rpx/reverse_proxy.yaml* is present, then it is used;
 
-- otherwise, the default configuration file config/reverse_proxy.yaml is used,
+- otherwise, the default configuration file *config/reverse_proxy.yaml* is used,
 whose contents is shown below:
 
 ```yaml
