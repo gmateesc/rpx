@@ -10,10 +10,14 @@ of a multi-tier application whose archutecture is shown below
 The reveres proxy is located between multiple clients and one or more instances
 of a downstream service.
 
-- The reverse proxy supports multiple downstream services with multiple
-  instances;
+The reverse proxy provides the following features:
 
-- Downstream services are identified using the Host Http header.
+- it supports HTTP version is 1.1 and messages encoded in JSON;
+
+- it supports multiple downstream services with multiple instances;
+
+- downstream services are identified using the Host Http header.
+
 
 
 The reverse proxy implements the following flow:
@@ -26,6 +30,9 @@ The reverse proxy implements the following flow:
 
 - After processing the request, the downstream service sends the HTTP
   response back to the reverse proxy.
+
+- The reverse proxy forwards the response to the client making
+  the initial request.
 
 
 
@@ -107,4 +114,13 @@ The reverse proxy supports two load balancing algorithms:
 The optional proxy.load_balancing parameter in the config file defines
 the load balancing algorithm. If this parameter is not present, then
 by default round-robin balancing is used.
+
+
+## Deployment to Kubernetes.
+
+Deployment to Kubernetes is done using these confiuguration files:
+
+```bash
+
+```
 
