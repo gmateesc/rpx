@@ -61,7 +61,7 @@ as described next.
 
 ## Configuration
 
-The porxy configuration file processed by the config module is determined as follows:
+The proxy configuration file processed by the config module is determined as follows:
 - if the configuration file /etc/rpx/reverse_proxy.yaml is present, then it is used;
 - otherwise, the default configuration file config/reverse_proxy.yaml is used,
 whose contents is shown below:
@@ -132,7 +132,7 @@ deploy
 
 These two files contain the followin specifications:
 
-- **reverse-proxy-configmap.yaml** defines the config-map
+- *reverse-proxy-configmap.yaml* defines the config-map
   the contains the reverse configuration to be injected
   into the reverse proxy pod;
 
