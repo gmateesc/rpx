@@ -177,7 +177,7 @@ it is used to inject in the reverse proxy the system configuration
 */etc/rpx/reverse_proxy.yaml*.
 
 
-Next section de onstrate a full deployment example.
+The next section demonstrates a full deployment example.
 
 
 
