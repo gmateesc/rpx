@@ -164,12 +164,12 @@ deploy
 These two files contain the followin specifications:
 
 - *reverse-proxy-configmap.yaml* defines the config-map
-  the contains the reverse configuration to be injected
-  into the reverse proxy pod;
+  that contains the reverse configuration to be injected
+  into the reverse-proxy pod;
 
-- *reverse-proxy-application.yaml* defines the Kuberners
+- *reverse-proxy-application.yaml* defines the Kubernetes
   deployment and service resources that provide the
-  the reverse proxy application, having a persistent IP address.
+  the reverse-proxy application, having a persistent IP address.
 
 The config-map resource definition includes the IP address
 and port of the instance(s) of the downstream services, and
