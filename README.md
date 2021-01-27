@@ -5,7 +5,7 @@
 This project contains the implementation of the reverse proxy component
 of a multi-tier application whose archutecture is shown below
 
-<img src="https://github.com/gmateesc/rpx/blob/main/images/arch.png" alt="sys arch" width="650">
+<img src="https://github.com/gmateesc/rpx/blob/main/images/arch.png" alt="sys arch" width="720">
 
 The reveres proxy is located between multiple clients and one or more instances
 of a downstream service.
@@ -116,7 +116,7 @@ the load balancing algorithm. If this parameter is not present, then
 by default round-robin balancing is used.
 
 
-## Deployment to Kubernetes.
+## Deployment to Kubernetes
 
 ### The Kubernetes resources created
 
@@ -244,7 +244,7 @@ Now we create the config-map resource
   $ kubectl apply -f reverse-proxy-configmap.yaml
   configmap/reverse-proxy-configmap created
 
-  k8s-master $ kb get  configmap/reverse-proxy-configmap -o yaml
+  $ kb get  configmap/reverse-proxy-configmap -o yaml
   apiVersion: v1
   kind: ConfigMap
   metadata:
