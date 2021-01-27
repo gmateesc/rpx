@@ -1,10 +1,34 @@
 # rpx
 
-## System architecture
+## Objective
+
+This project contains the implementation of the reverse proxy component
+of a multi-tier application whose archutecture is shown below
 
 ![alt text][arch]
-
 [arch]: images/arch.png "System architecture"
+
+
+The reveres proxy sits between multiple clients and one or several
+instances of a downstream service.
+
+- The reverse proxy supports multiple downstream services with multiple
+instances
+
+- Downstream services are identified using the Host Http header.
+
+
+The reverse proxy implement sthe following flow:
+
+- It listens to HTTP requests and forwards them to one of the instances
+  of a downstream service that will process the requests.
+
+- Requests are load-balanced and should support multiple loadbalancing
+  strategies.
+
+- After processing the request, the downstream service sends the HTTP
+  response back to the reverse proxy.
+
 
 
 ## Configuration
