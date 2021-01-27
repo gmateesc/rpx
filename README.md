@@ -60,7 +60,7 @@ The reverse proxy implements the following flow:
 <a name="solution" id="solution"></a>
 ## Solution implementation
 
-The reverse proxy is implemented by the python module reverse_proxy.py,
+The reverse proxy is implemented by the python module *reverse_proxy.py*,
 which contains the routing logic and uses the app package containg
 the confg and util modules:
 
