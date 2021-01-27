@@ -5,8 +5,8 @@
 This project contains the implementation of the reverse proxy component
 of a multi-tier application whose archutecture is shown below
 
-![alt text][arch]
-[arch]: images/arch.png "System architecture"
+
+![System architecture](images/arch.png| width=500)
 
 
 The reveres proxy sits between multiple clients and one or several
