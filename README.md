@@ -19,7 +19,7 @@
   - [The Kubernetes resources created](#k8s-rsrc)
   - [Downstream service instances](#downstream-svc)
   - [Create config-map resource](#configmap)
-  - Deployment of the application(#deploy-app)
+  - [Deployment of the application](#deploy-app)
 
 
 
