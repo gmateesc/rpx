@@ -186,7 +186,7 @@ The next section demonstrates a full deployment example.
 
 For the sake of simplicity, assume there is one downstream service with two
 instances. A simple way to create a demo downstream is to use NGINX
-(the default NGINX deployment proovides HTML rather than JSON content,
+(the default NGINX deployment provides HTML rather than JSON content,
 so in this case the JSON capability of the reverse proxy is not tested).
 
 The first service instance can be created as follows:
