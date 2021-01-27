@@ -1,4 +1,4 @@
-# rpx
+# RPX
 
 ## Objective
 
@@ -37,7 +37,6 @@ The reverse proxy implements the following flow:
 
 
 ## Solution implementation
-
 
 The reverse proxy is implemented by the python module reverse_proxy.py,
 which contains the routing logic and uses the app package containg
@@ -116,6 +115,8 @@ the load balancing algorithm. If this parameter is not present, then
 by default round-robin balancing is used.
 
 
+
+
 ## Deployment to Kubernetes
 
 ### The Kubernetes resources created
@@ -131,26 +132,25 @@ deploy
 
 These two files contain the followin specifications:
 
-- reverse-proxy-configmap.yaml defines the config-map
+- **reverse-proxy-configmap.yaml** defines the config-map
   the contains the reverse configuration to be injected
   into the reverse proxy pod;
 
-- reverse-proxy-application.yaml defines the Kuberners
+- **reverse-proxy-application.yaml** defines the Kuberners
   deployment and service resources that provide the
   the reverse proxy application, having a persistent IP address.
 
 The config-map resource definition includes the IP address
 and port of the instance(s) of the downstream services, and
 it is used to inject in the reverse proxy the system configuration
-/etc/rpx/reverse_proxy.yaml.
+**/etc/rpx/reverse_proxy.yaml**.
 
 
-The next section presents a full deployment example.
+Next section de onstrate a full deployment example.
 
 
-### Example deployment
 
-#### Downstream service instances
+### Downstream service instances
 
 For the sake of simplicity, assume there is one downstream service with two
 instances. A simple way to create a demo downstream is to use NGINX
@@ -199,14 +199,15 @@ Next, we use this information to create the config-map resource.
 
 
 
-#### Create config-map resource
+### Create config-map resource
 
 Now we creat the config-map resource, which we will inject into the
 reverse-proxy pod under /etc/rpx/reverse_proxy.yaml in order to override 
 the default configuration provided under config/reverse_proxy.yaml
 
 We use the information obtained at the previous step to define
-the config map resource:
+the config map resource using specification provided by the
+**reverse-proxy-configmap.yaml** file:
 
 ```yaml
 $ cat reverse-proxy-configmap.yaml
@@ -237,20 +238,19 @@ data:
         algorithm: round-robin
 ```
 
-Now we create the config-map resource
+
+Now we create the config-map resource using the **reverse-proxy-configmap.yaml** file:
 
 ``` bash
-
   $ kubectl apply -f reverse-proxy-configmap.yaml
   configmap/reverse-proxy-configmap created
 
-  $ kb get  configmap/reverse-proxy-configmap -o yaml
+  $ kubectl get  configmap/reverse-proxy-configmap -o yaml
   apiVersion: v1
   kind: ConfigMap
   metadata:
     name: reverse-proxy-configmap
     namespace: default
-    resourceVersion: "1360044"
     uid: 8b8d5c42-174f-4a64-be1e-e3c09ba09b65
   data:
     reverse_proxy.yaml: "proxy:\n  listen:\n    address: 0.0.0.0\n    port: 8080\n  services:\n
@@ -260,3 +260,12 @@ Now we create the config-map resource
       \ load_balancing:\n    algorithm: round-robin\n"
 ```
 
+
+### Deployment of the application.
+
+Now we are ready to deploy the application; we create a deployment,
+containing two pods and expose the application as a service with a
+persistent IP address using the specification contained in the
+**reverse-proxy-application.yaml** file
+
+$ cat reverse-proxy-application.yaml 
