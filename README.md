@@ -199,4 +199,41 @@ Next, we use this information to create the config-map resource.
 
 
 
+#### Create config-map resource
+
+Now we creat the config-map resource, which we will inject into the
+reverse-proxy pod under /etc/rpx/reverse_proxy.yaml in order to override 
+the default configuration provided under config/reverse_proxy.yaml
+
+We use the information obtained at the previous step to define
+the config map resource:
+
+```yaml
+$ cat reverse-proxy-configmap.yaml
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: reverse-proxy-configmap
+  namespace: default
+data:
+  reverse_proxy.yaml: |
+    proxy:
+      listen:
+        address: 0.0.0.0
+        port: 8080
+      services:
+      - name: my-service
+        domain: my-service.my-company.com
+        hosts:
+        - address: 10.97.135.24
+          port: 9090
+        - address: 10.108.74.161
+          port: 9091      
+      # Supported load balancing algorithms
+      #  round-robin
+      #  random
+      load_balancing:
+        algorithm: round-robin
+```
 
