@@ -118,7 +118,9 @@ by default round-robin balancing is used.
 
 ## Deployment to Kubernetes.
 
-Deployment to Kubernetes is done using two confiuguration files:
+### The Kubernetes resources created
+
+Deployment to Kubernetes is done using two configuration files:
 
 ```bash
 $ tree deploy
@@ -136,4 +138,65 @@ These two files contain the followin specifications:
 - reverse-proxy-application.yaml defines the Kuberners
   deployment and service resources that provide the
   the reverse proxy application, having a persistent IP address.
+
+The config-map resource definition includes the IP address
+and port of the instance(s) of the downstream services, and
+it is used to inject in the reverse proxy the system configuration
+/etc/rpx/reverse_proxy.yaml.
+
+
+The next section presents a full deployment example.
+
+
+### Example deployment
+
+#### Downstream service instances
+
+For the sake of simplicity, assume there is one downstream service with two
+instances. A simple way to create a demo downstream is to use NGINX
+(the default NGINX deployment proovides HTML rather than JSON content,
+so in this case the JSON capability of the reverse proxy is not tested).
+
+The first service instance can be created as follows:
+```bash
+  k8s-master $ kubectl create deployment nginx1 --image=nginx
+  deployment.apps/nginx1 created
+
+  k8s-master $ kubectl create service nodeport nginx1 --tcp=9090:80
+  service/nginx1 created
+
+  k8s-master $ kubectl describe service nginx1 | egrep ^IP:
+  IP:                       10.97.135.24
+
+  k8s-master $ curl -isS 10.97.135.24:9090 | head -2
+  HTTP/1.1 200 OK
+  Server: nginx/1.19.6
+```
+
+Similarly, the second service instance can be created as follows:
+```bash
+  k8s-master $ kubectl create deployment nginx2 --image=nginx
+  deployment.apps/nginx2 created
+
+  k8s-master $ kubectl create service nodeport nginx2 --tcp=9091:80
+  service/nginx2 created
+
+  k8s-master $ kubectl describe service nginx2 | egrep ^IP:
+  IP:                       10.108.74.161
+
+  k8s-master $ curl -isS 10.108.74.161:9091 | head -2
+  HTTP/1.1 200 OK
+  Server: nginx/1.19.6
+```
+
+
+At this point, we know the IP address and port of the two instances of
+the downstream service:
+- 10.97.135.24:9090
+- 10.108.74.161:9091
+
+Next, we use this information to create the config-map resource.
+
+
+
 
