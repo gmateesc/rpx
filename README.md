@@ -14,12 +14,12 @@
 
 - [Load balancing](#lb)
 
-
 - [Deployment to Kubernetes](#deploy2k8s)
   - [The Kubernetes resources created](#k8s-rsrc)
   - [Downstream service instances](#downstream-svc)
   - [Create config-map resource](#configmap)
   - [Deployment of the application](#deploy-app)
+  - [Access the reverse proxy](#access-svc)
 
 
 
@@ -306,7 +306,7 @@ containing two pods and expose the application as a service with a
 persistent IP address using the specification contained in the
 *reverse-proxy-application.yaml* file
 
-```bash
+```yaml
 $ cat reverse-proxy-application.yaml
 apiVersion: apps/v1
 kind: Deployment
@@ -371,3 +371,44 @@ spec:
     targetPort: 8080
     protocol: TCP
 ```
+
+This file specifies two resources:
+- the deployment of the application, with two pods;
+- the service that exposes the application using a persistent IP address.
+
+
+
+We apply this specification to deploy the application and create a service:
+
+```bash
+  $ kubectl apply -f  reverse-proxy-application.yaml
+  deployment.apps/reverse-proxy created
+  service/reverse-proxy created
+
+  $ kubectl describe svc reverse-proxy | egrep "^IP:|Port:|Endpoint"
+  IP:                       10.100.174.188
+  Port:                     <unset>  8080/TCP
+  TargetPort:               8080/TCP
+  NodePort:                 <unset>  30080/TCP
+  Endpoints:                10.244.2.13:8080,10.244.2.14:8080
+```
+
+
+
+<a name="access-svc" id="access-svc"></a>
+### Access the reverse proxy
+
+
+We can access the service using curl and specifying the Host in the HTTP header:
+
+```bash
+  $ curl -isS -H "Host: my-service.my-company.com" 10.100.174.188:8080 
+  HTTP/1.1 200 OK
+  Content-Type: text/html
+  Content-Length: 612
+  Server: nginx/1.19.6
+  Date: Wed, 27 Jan 2021 05:58:00 GMT
+  Last-Modified: Tue, 15 Dec 2020 13:59:38 GMT
+  ...
+```
+
