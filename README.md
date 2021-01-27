@@ -116,13 +116,13 @@ proxy:
     algorithm: round-robin
 ```
 
-In a real application the default settings are not suitable
-(for example, the setting proxy.services[0].hosts[0].adress
-likely needs to be chaned.)
+In a real application, the default settings are not suitable
+(for example, the setting *proxy.services[0].hosts[0].address* 
+likely needs to be changed.)
 
 
-To suuport deploy-time coniguration of the reverse proxy,
-Kubernetes configMap resource is used, whose content is
+To support deploy-time coniguration of the reverse proxy,
+the Kubernetes *configMap* resource is used, whose content is
 provided to the reverse proxy application using a volume
 specifed in the deployment descriptor.
 
