@@ -19,7 +19,7 @@
   - [The Kubernetes resources created](#k8s-rsrc)
   - [Downstream service instances](#downstream-svc)
   - [Create config-map resource](#configmap)
-
+  - Deployment of the application(#deploy-app)
 
 
 
@@ -147,7 +147,7 @@ by default round-robin balancing is used.
 
 
 
-<a name="deploy2k8s id="deploy2k8s"></a>
+<a name="deploy2k8s" id="deploy2k8s"></a>
 ## Deployment to Kubernetes
 
 
@@ -297,7 +297,9 @@ Now we create the config-map resource using the *reverse-proxy-configmap.yaml* f
 ```
 
 
-### Deployment of the application.
+
+<a name="deploy-app" id="deploy-app"></a>
+### Deployment of the application
 
 Now we are ready to deploy the application; we create a deployment,
 containing two pods and expose the application as a service with a
