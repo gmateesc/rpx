@@ -55,7 +55,6 @@ as described next.
 
 ## Configuration
 
-
 The porxy configuration file processed by the config module is determined as follows:
 - if the configuration file /etc/rpx/reverse_proxy.yaml is present, then it is used;
 - otherwise, the default configuration file config/reverse_proxy.yaml is used,
@@ -94,3 +93,18 @@ To suuport deploy-time coniguration of the reverse proxy,
 Kubernetes configMap resource is used, whose content is
 provided to the reverse proxy application using a volume
 specifed in the deployment descriptor.
+
+
+## Load balancing
+
+The downstream service(s) served by the proxy can contain multiple instances.
+The reverse proxy supports two load balancing algorithms:
+
+- round-robin;
+
+- random
+
+The optional proxy.load_balancing parameter in the config file defines
+the load balancing algorithm. If this parameter is not present, then
+by default round-robin balancing is used.
+
