@@ -62,7 +62,7 @@ The reverse proxy implements the following flow:
 
 The reverse proxy is implemented by the python module *reverse_proxy.py*,
 which contains the routing logic and uses the app package containg
-the confg and util modules:
+the *config* and *util* modules, as illustrated here:
 
 ```bash
 $ tree src/
@@ -77,7 +77,7 @@ src/
 ```
 
 
-The config module processes the reverse proxy configuration file,
+The *config* module processes the reverse proxy configuration file,
 as described next.
 
 
