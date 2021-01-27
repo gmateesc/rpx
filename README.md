@@ -306,4 +306,68 @@ containing two pods and expose the application as a service with a
 persistent IP address using the specification contained in the
 *reverse-proxy-application.yaml* file
 
-$ cat reverse-proxy-application.yaml 
+```bash
+$ cat reverse-proxy-application.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: reverse-proxy
+  namespace: default
+  labels:
+    app: reverse-proxy
+spec:
+  replicas: 2
+  #revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: reverse-proxy
+  template:
+    metadata:
+      labels:
+        app: reverse-proxy
+    spec:
+      containers:
+      - name: rpx
+        image: gmateescu13/reverse-proxy:v1.0
+        command: [ "/opt/rpx/reverse_proxy.py" ]
+        ports:
+        - containerPort: 8080
+          name: http-server
+          protocol: TCP
+        resources:
+          limits:
+            memory: 500Mi
+          requests:
+            cpu: 500m
+            memory: 400Mi
+        volumeMounts:
+        - mountPath: /etc/rpx
+          # matches spec.volumes.configMap.name
+          name: config-rproxy
+          readOnly: true
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - name: config-rproxy
+        configMap:
+          # Matches metadata.name of configMap resource
+          name: reverse-proxy-configmap
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: default
+  name: reverse-proxy
+  labels:
+    app: reverse-proxy
+spec:
+  type: NodePort
+  externalTrafficPolicy: Cluster
+  selector:
+    app: reverse-proxy  
+  ports:
+  - nodePort: 30080
+    port: 8080
+    targetPort: 8080
+    protocol: TCP
+```
