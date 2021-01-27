@@ -272,7 +272,7 @@ data:
 ```
 
 
-Now we create the config-map resource using the *reverse-proxy-configmap.yaml* file:
+The config-map resource is created using the *reverse-proxy-configmap.yaml* file:
 
 ``` bash
   $ kubectl apply -f reverse-proxy-configmap.yaml
@@ -298,10 +298,10 @@ Now we create the config-map resource using the *reverse-proxy-configmap.yaml* f
 <a name="deploy-app" id="deploy-app"></a>
 ### Deployment of the application
 
-Now we are ready to deploy the application; we create a deployment,
+Now we are ready to deploy the application: we create a deployment,
 containing two pods and expose the application as a service with a
-persistent IP address using the specification contained in the
-*reverse-proxy-application.yaml* file
+persistent IP address, using the specification contained in the
+*reverse-proxy-application.yaml* file:
 
 ```yaml
 $ cat reverse-proxy-application.yaml
@@ -374,8 +374,8 @@ This file specifies two resources:
 - the service that exposes the application using a persistent IP address.
 
 
-
-We apply this specification to deploy the application and create a service:
+We deploy the application and create a service by applying the specification
+defined by the *reverse-proxy-application.yaml* file:
 
 ```bash
   $ kubectl apply -f  reverse-proxy-application.yaml
