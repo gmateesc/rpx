@@ -234,12 +234,12 @@ Next, we use this information to create the config-map resource.
 <a name="configmap" id="configmap"></a>
 ### Create config-map resource
 
-Now we creat the config-map resource, which we will inject into the
-reverse-proxy pod under /etc/rpx/reverse_proxy.yaml in order to override 
-the default configuration provided under config/reverse_proxy.yaml
+Now we create the config-map resource, which we will inject into the
+reverse-proxy pod under */etc/rpx/reverse_proxy.yaml* in order to override 
+the default configuration provided under *config/reverse_proxy.yaml*.
 
 We use the information obtained at the previous step to define
-the config map resource using specification provided by the
+the config-map resource using specification provided by the
 *reverse-proxy-configmap.yaml* file:
 
 ```yaml
