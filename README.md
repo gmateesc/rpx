@@ -412,3 +412,6 @@ We can access the service using curl and specifying the Host in the HTTP header:
   ...
 ```
 
+To test support for JSON payload, a Node.js or Flask downstream service
+can be used instead of NGINX.
+
