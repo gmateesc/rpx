@@ -121,7 +121,7 @@ In a real application, the default settings are not suitable
 likely needs to be changed.)
 
 
-To support deploy-time coniguration of the reverse proxy,
+To support deploy-time configuration of the reverse-proxy,
 the Kubernetes *configMap* resource is used, whose content is
 provided to the reverse proxy application using a volume
 specifed in the deployment descriptor.
