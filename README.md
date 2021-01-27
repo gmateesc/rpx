@@ -1,5 +1,29 @@
 # RPX
 
+
+## https://github.com/gmateesc/rpx/blob/main/README.md#kubernetes-resources-created
+
+
+## Table of Contents
+
+- [Objective](#objective)
+
+- [Solution implementation](#solution)
+
+- [Configuration](#config)
+
+- [Load balancing](#lb)
+
+
+- [Deployment to Kubernetes](#deploy2k8s)
+  - [The Kubernetes resources created](#k8s-rsrc)
+  - [Downstream service instances](#downstream-svc)
+  - [Create config-map resource](#configmap)
+
+
+
+
+<a name="objective" id="objective"></a>
 ## Objective
 
 This project contains the implementation of the reverse proxy component
@@ -36,6 +60,7 @@ The reverse proxy implements the following flow:
 
 
 
+<a name="solution" id="solution"></a>
 ## Solution implementation
 
 The reverse proxy is implemented by the python module reverse_proxy.py,
@@ -59,10 +84,14 @@ The config module processes the reverse proxy configuration file,
 as described next.
 
 
+
+<a name="config" id="config"></a>
 ## Configuration
 
 The proxy configuration file processed by the config module is determined as follows:
-- if the configuration file /etc/rpx/reverse_proxy.yaml is present, then it is used;
+
+- if the configuration file */etc/rpx/reverse_proxy.yaml* is present, then it is used;
+
 - otherwise, the default configuration file config/reverse_proxy.yaml is used,
 whose contents is shown below:
 
@@ -101,6 +130,7 @@ provided to the reverse proxy application using a volume
 specifed in the deployment descriptor.
 
 
+<a name="lb" id="lb"></a>
 ## Load balancing
 
 The downstream service(s) served by the proxy can contain multiple instances.
@@ -110,16 +140,20 @@ The reverse proxy supports two load balancing algorithms:
 
 - random
 
+
 The optional proxy.load_balancing parameter in the config file defines
 the load balancing algorithm. If this parameter is not present, then
 by default round-robin balancing is used.
 
 
 
-
+<a name="deploy2k8s id="deploy2k8s"></a>
 ## Deployment to Kubernetes
 
+
+<a name="k8s-rsrc" id="k8s-rsrc"></a>
 ### The Kubernetes resources created
+
 
 Deployment to Kubernetes is done using two configuration files:
 
@@ -136,20 +170,21 @@ These two files contain the followin specifications:
   the contains the reverse configuration to be injected
   into the reverse proxy pod;
 
-- **reverse-proxy-application.yaml** defines the Kuberners
+- *reverse-proxy-application.yaml* defines the Kuberners
   deployment and service resources that provide the
   the reverse proxy application, having a persistent IP address.
 
 The config-map resource definition includes the IP address
 and port of the instance(s) of the downstream services, and
 it is used to inject in the reverse proxy the system configuration
-**/etc/rpx/reverse_proxy.yaml**.
+*/etc/rpx/reverse_proxy.yaml*.
 
 
 Next section de onstrate a full deployment example.
 
 
 
+<a name="downstream-svc" id="downstream-svc"></a>
 ### Downstream service instances
 
 For the sake of simplicity, assume there is one downstream service with two
@@ -199,6 +234,7 @@ Next, we use this information to create the config-map resource.
 
 
 
+<a name="configmap" id="configmap"></a>
 ### Create config-map resource
 
 Now we creat the config-map resource, which we will inject into the
@@ -207,7 +243,7 @@ the default configuration provided under config/reverse_proxy.yaml
 
 We use the information obtained at the previous step to define
 the config map resource using specification provided by the
-**reverse-proxy-configmap.yaml** file:
+*reverse-proxy-configmap.yaml* file:
 
 ```yaml
 $ cat reverse-proxy-configmap.yaml
@@ -239,7 +275,7 @@ data:
 ```
 
 
-Now we create the config-map resource using the **reverse-proxy-configmap.yaml** file:
+Now we create the config-map resource using the *reverse-proxy-configmap.yaml* file:
 
 ``` bash
   $ kubectl apply -f reverse-proxy-configmap.yaml
@@ -266,6 +302,6 @@ Now we create the config-map resource using the **reverse-proxy-configmap.yaml**
 Now we are ready to deploy the application; we create a deployment,
 containing two pods and expose the application as a service with a
 persistent IP address using the specification contained in the
-**reverse-proxy-application.yaml** file
+*reverse-proxy-application.yaml* file
 
 $ cat reverse-proxy-application.yaml 
